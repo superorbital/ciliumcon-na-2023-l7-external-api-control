@@ -1,0 +1,5 @@
+namespace: students
+resources:
+  - namespace.yaml
+  - policies
+  - workloads
