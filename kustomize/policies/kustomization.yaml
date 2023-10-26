@@ -1,0 +1,5 @@
+resources:
+ - policy.yaml
+
+configurations:
+  - namespace-transformer.yaml

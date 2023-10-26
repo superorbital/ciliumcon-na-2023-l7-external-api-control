@@ -1,0 +1,7 @@
+namespace:
+- kind: CiliumNetworkPolicy
+  path: spec/egress/toPorts/originatingTLS/secret/namespace
+  create: false
+- kind: CiliumNetworkPolicy
+  path: spec/egress/toPorts/terminatingTLS/secret/namespace
+  create: false

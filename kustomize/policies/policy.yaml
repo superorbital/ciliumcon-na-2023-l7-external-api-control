@@ -1,0 +1,34 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: so-github-access
+spec:
+  description: Limits access only to certain GitHub repositories
+  endpointSelector:
+    matchLabels:
+      app: codeserver 
+  egress:
+  - toFQDNs:
+    - matchName: github.com
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+      rules:
+        http:
+        - path: /superorbital/.*
+      originatingTLS:
+        secret:
+          name: tls-originating
+          namespace: kustomize_namespace
+      terminatingTLS:
+        secret:
+          name: tls-terminating
+          namespace: kustomize_namespace
+  - toPorts:
+    - ports:
+      - port: "53"
+        protocol: ANY
+      rules:
+        dns:
+          - matchPattern: "*"
