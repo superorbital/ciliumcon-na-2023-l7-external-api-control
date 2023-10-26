@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codeserver-lramirez
+spec:
+  replicas: 1
+  selector: {}
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+      - name: code-server
+        image: lscr.io/linuxserver/code-server:latest
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: Etc/UTC
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        ports:
+        - containerPort: 8443
+        resources:
+          limits:
+            memory: 1G
+            cpu: 1
+      # securityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      volumes:
+      - name: config
+        emptyDir: {}

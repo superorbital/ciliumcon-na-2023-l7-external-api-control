@@ -1,0 +1,8 @@
+resources:
+  - codeserver.yaml
+  - service.yaml
+
+commonLabels:
+  app: codeserver
+  class-name: superorbital
+  student-name: lramirez
