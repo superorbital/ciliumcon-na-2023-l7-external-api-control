@@ -15,3 +15,7 @@ tasks:
     desc: "Retrieves the cluster kubeconfig and saves it as \"kind-cluster.kubeconfig\""
     cmds:
       - ./setup/get-kubeconfig.sh so-ciliumcon
+  deploy:
+    desc: "Deploys the policies, workloads and certificates to the cluster"
+    cmds:
+      - ./setup/deploy.sh so-ciliumcon
