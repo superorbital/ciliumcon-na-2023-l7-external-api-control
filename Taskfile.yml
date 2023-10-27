@@ -4,18 +4,23 @@ tasks:
   create-cluster:
     desc: "Creates a Kind cluster with a local registry and Cilium installed"
     cmds:
-      - ./setup/create-cluster.sh so-ciliumcon
-      - ./setup/install-cilium.sh so-ciliumcon
-      - ./setup/install-cert-manager.sh so-ciliumcon
+    - ./setup/create-cluster.sh so-ciliumcon
+    - ./setup/install-cilium.sh so-ciliumcon
+    - ./setup/install-cert-manager.sh so-ciliumcon
   cleanup-cluster:
     desc: "Deletes the Kind cluster and the local registry"
     cmds:
-      - ./setup/cleanup-cluster.sh so-ciliumcon
+    - ./setup/cleanup-cluster.sh so-ciliumcon
   get-cluster-kubeconfig:
     desc: "Retrieves the cluster kubeconfig and saves it as \"kind-cluster.kubeconfig\""
     cmds:
-      - ./setup/get-kubeconfig.sh so-ciliumcon
+    - ./setup/get-kubeconfig.sh so-ciliumcon
   deploy:
     desc: "Deploys the policies, workloads and certificates to the cluster"
     cmds:
-      - ./setup/deploy.sh so-ciliumcon
+    - ./setup/deploy.sh so-ciliumcon
+  build-certificate-generation:
+    desc: "Builds and pushes the certificate generation docker image"
+    dir: '{{.USER_WORKING_DIR}}/certificate-generation'
+    cmds:
+    - ./build.sh

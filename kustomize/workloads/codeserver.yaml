@@ -22,15 +22,18 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
+        - name: certificates
+          mountPath: /etc/ssl/certs/ca-certificates.crt
+          subPath: ca.crt
         ports:
         - containerPort: 8443
         resources:
           limits:
             memory: 1G
             cpu: 1
-      # securityContext:
-      #   runAsUser: 1000
-      #   runAsGroup: 1000
       volumes:
       - name: config
         emptyDir: {}
+      - name: certificates
+        secret:
+          secretName: tls-originating

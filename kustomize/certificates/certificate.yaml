@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: so-selfsigned-ca-root-certificate
+spec:
+  isCA: true
+  commonName: so-ciliumcon-selfsigned-ca
+  secretName: so-tls-inspection-ca-root-certificate
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  issuerRef:
+    name: so-selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

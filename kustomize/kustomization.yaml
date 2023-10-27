@@ -1,5 +1,6 @@
 namespace: students
 resources:
-  - namespace.yaml
-  - policies
-  - workloads
+- namespace.yaml
+- policies
+- certificates
+- workloads

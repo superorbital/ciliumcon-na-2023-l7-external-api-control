@@ -1,0 +1,10 @@
+resources:
+- certificate.yaml
+- clusterissuer.yaml
+- job.yaml
+- clusterrole.yaml
+- rolebinding.yaml
+- serviceaccount.yaml
+
+commonLabels:
+  app: certificate-generation
