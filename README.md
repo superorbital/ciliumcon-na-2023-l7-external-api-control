@@ -85,7 +85,8 @@ By default, the certificates and the workloads are deployed in the `students`
 namespace. By [inspecting the so-github-access][5] policy, you can see how it
 targets our codeserver workloads, how it only allows access to the superorbital
 organization in GitHub, and how it uses the originating and terminating
-certificates in the same namespace.
+certificates in the same namespace. For more information on the L7 network
+policies and all its features, see: https://docs.cilium.io/en/latest/security/policy/language/#l7-policy
 
 [5]: ./kustomize/policies/policy.yaml
 
