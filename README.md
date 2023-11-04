@@ -108,7 +108,7 @@ kubectl --kubeconfig kind-cluster.kubeconfig port-forward -n students service/co
 
 Which will make the codeserver UI available at http://localhost:8443/ -- try
 to access that URL using your favorite browser!
-<img src="assets/3.png" width="1299" height="890">
+<img src="assets/3.png">
 
 Then finally, try to clone any repo that's not in the superorbital
 organization and watch it be rejected:
