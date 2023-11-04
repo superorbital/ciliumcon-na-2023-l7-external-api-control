@@ -4,20 +4,24 @@ set -eou pipefail
 CA_CERT_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 MODIFIED_CA_CERT_BUNDLE=ca-certificates-modified.crt
 INSPECTION_CA_NAME=inspection-ca
-SAN_INFO="subjectAltName=DNS:github.com"
+
+# PKI information (can be overriden with env vars)
+SAN_INFO=${SAN_INFO:-"subjectAltName=DNS:github.com"}
+CERTIFICATE_NAME=${CERTIFICATE_NAME:-"so-selfsigned-ca-root-certificate"}
+CA_SECRET_NAME=${CA_SECRET_NAME:-"so-tls-inspection-ca-root-certificate"}
 
 # Ensure we're using the latest CA certificates.
 update-ca-certificates
 
 # Wait for the self-signed CA certificate to provision.
-kubectl wait --for=condition=READY certificate -n "${NAMESPACE}" so-selfsigned-ca-root-certificate
+kubectl wait --for=condition=READY certificate -n "${NAMESPACE}" "${CERTIFICATE_NAME}"
 
 # Move to /tmp for the rest of the steps in script
 cd /tmp
 
 # Get our self-signed CA certificate.
-kubectl get secret -n "${NAMESPACE}" so-tls-inspection-ca-root-certificate -o jsonpath='{.data.ca\.crt}' | base64 -d > "${INSPECTION_CA_NAME}".pem
-kubectl get secret -n "${NAMESPACE}" so-tls-inspection-ca-root-certificate -o jsonpath='{.data.tls\.key}' | base64 -d > "${INSPECTION_CA_NAME}".key
+kubectl get secret -n "${NAMESPACE}" "${CA_SECRET_NAME}" -o jsonpath='{.data.ca\.crt}' | base64 -d > "${INSPECTION_CA_NAME}".pem
+kubectl get secret -n "${NAMESPACE}" "${CA_SECRET_NAME}" -o jsonpath='{.data.tls\.key}' | base64 -d > "${INSPECTION_CA_NAME}".key
 
 # Add our CA certificate to the CA cert bundle on the system.
 cp "${CA_CERT_BUNDLE}" "${MODIFIED_CA_CERT_BUNDLE}"
@@ -25,8 +29,8 @@ cat "${INSPECTION_CA_NAME}".pem >> "${MODIFIED_CA_CERT_BUNDLE}"
 
 # Provide to Cilium the modified cert bundle as set of CAs that it should trust 
 # when originating the secondary TLS connections.
-kubectl delete secret tls-originating --ignore-not-found=true
-kubectl create secret generic --from-file=ca.crt="${MODIFIED_CA_CERT_BUNDLE}" tls-originating
+kubectl delete secret -n "${NAMESPACE}" tls-originating --ignore-not-found=true
+kubectl create secret -n "${NAMESPACE}" generic --from-file=ca.crt="${MODIFIED_CA_CERT_BUNDLE}" tls-originating
 
 # Create the TLS certificates with a CN that matches the DNS of the 
 # destination service to be intercepted for inspection.
