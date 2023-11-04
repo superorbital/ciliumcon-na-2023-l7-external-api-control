@@ -13,6 +13,12 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: SAN_INFO
+          value: "subjectAltName=DNS:github.com"
+        - name: CERTIFICATE_NAME
+          value: so-selfsigned-ca-root-certificate
+        - name: CA_SECRET_NAME
+          value: so-tls-inspection-ca-root-certificate
       serviceAccount: so-certificate-generation
       securityContext:
         runAsUser: 1000
