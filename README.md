@@ -99,16 +99,20 @@ instance with the provided task command:
 task install
 ```
 
-You can port-forward the codeserver instance to your browser by a simple
+You can port-forward the codeserver instance to your local computer by a simple
 kubectl command:
 
 ```sh
 kubectl --kubeconfig kind-cluster.kubeconfig port-forward -n students service/codeserver-lramirez 8443:8443
 ```
 
-And then finally, try to clone any repo that's not in the superorbital
+Which will make the codeserver UI available at http://localhost:8443/ -- try
+to access that URL using your favorite browser!
+<img src="assets/3.png" width="1299" height="890">
+
+Then finally, try to clone any repo that's not in the superorbital
 organization and watch it be rejected:
-<img src="assets/3.gif">
+<img src="assets/4.gif">
 
 ### Cleanup
 
