@@ -40,7 +40,7 @@ task create-cluster
 
 This will create the Kind cluster, a local container registry, and install
 cilium and cert-manager in the cluster:
-<img src="assets/1.gif" width="800" height="474">
+<img src="assets/1.gif">
 
 After this is done, you can retrieve the kubeconfig for the cluster using the command
 
@@ -50,7 +50,7 @@ task get-kubeconfig
 
 which will create a `kind-cluster.kubeconfig` file that you can use to talk to
 your cluster:
-<img src="assets/2.png" width="876" height="425">
+<img src="assets/2.png">
 
 Feel free to play around with this cluster! When you're ready, we'll start to
 deploy all the resources.
